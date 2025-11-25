@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALBERTAR | Panel</title>
+  <link rel="icon" href="imaganes/Logo sin fondo.png" type="image/png">
+  <script defer src="https://unpkg.com/feather-icons"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+  <section id="app" class="app show">
+    <aside class="sidebar">
+      <div class="side-brand">
+        <div class="brand__logo" aria-hidden="true"
+          style="width:100px;height:100px;display:flex;align-items:center;justify-content:center;">
+          <img src="imaganes/Logo sin fondo.png" alt="Logo ALBERTAR" style="width:100%;height:auto;object-fit:contain;">
+        </div>
+
+        <div>
+          <div class="brand__name">ALBERTAR</div>
+          <div class="muted" style="font-size:.8rem">Panel</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="nav__btn" data-view="dashboard"><i data-feather="home"></i> Dashboard</button>
+        <button class="nav__btn" data-view="clientes"><i data-feather="users"></i> Clientes</button>
+        <button class="nav__btn" data-view="mascotas"><i data-feather="heart"></i> Mascotas</button>
+        <button class="nav__btn" data-view="servicios"><i data-feather="list"></i> Servicios</button>
+        <button class="nav__btn" data-view="empleados"><i data-feather="briefcase"></i> Empleados</button>
+        <button class="nav__btn" data-view="citas"><i data-feather="calendar"></i> Citas</button>
+      </nav>
+      <div class="sidebar__footer">
+        <div>© DTC Gang</div>
+      </div>
+    </aside>
+    <main class="content">
+      <header class="topbar" style="background:#64311B;color:#f8f8f8;">
+        <div class="user-chip">
+          <i data-feather="shield"></i>
+          <span>Sesión:</span>
+          <span id="chipUser" class="role">—</span>
+        </div>
+        <button class="icon-btn" id="logoutBtn"><i data-feather="log-out"></i><span>Salir</span></button>
+      </header>
+      <section class="view" id="view"></section>
+    </main>
+  </section>
+
+  <dialog id="modal">
+    <form method="dialog" class="modal" id="modalForm">
+      <div class="modal__head">
+        <h3 id="modalTitle" style="margin:0">Formulario</h3>
+      </div>
+      <div class="modal__body" id="modalBody"></div>
+      <div class="modal__foot">
+        <span id="modalError" class="error" style="margin-right:auto; display:none"></span>
+        <button class="btn btn--ghost" value="cancel">Cancelar</button>
+        <button class="btn" id="modalSubmit" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

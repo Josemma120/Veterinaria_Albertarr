@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALBERTAR | Iniciar sesión</title>
+  <link rel="icon" href="imaganes/Logo blanco.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/feather-icons"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <section class="login-wrap" aria-labelledby="titleLogin">
+    <div class="login-card" role="dialog" aria-modal="true">
+      <div class="brand">
+        <div class="brand__logo" aria-hidden="true"><img src="imaganes/Logo sin fondo.png" alt="Logo ALBERTAR"></div>
+        <div>
+          <div class="brand__name">Veterinaria Albertar</div>
+          <div class="muted">Acceso a panel</div>
+        </div>
+      </div>
+      <h1 id="titleLogin" style="margin:8px 0 2px">Iniciar sesión</h1>
+      <p class="muted" style="margin:0 0 14px">Ingresa tus credenciales para continuar.</p>
+      <div class="field">
+        <label class="label" for="username">Usuario</label>
+        <input id="username" class="input" placeholder="Nombre de usuario" />
+      </div>
+      <div class="field">
+        <label class="label" for="password">Contraseña</label>
+        <input id="password" class="input" type="password" placeholder="••••••••" />
+      </div>
+      <div style="display:flex; gap:8px; margin-top:10px">
+        <button class="btn" id="loginBtn"><i data-feather="log-in"></i> Entrar</button>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { handleLoginPage } from './js/auth.js';
+    handleLoginPage();
+    // Inicializar iconos de Feather después de que todo cargue
+    if (window.feather) {
+      window.feather.replace();
+    }
+  </script>
+</body>
+</html>
