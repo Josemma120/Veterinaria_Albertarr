@@ -1,13 +1,11 @@
 import { db } from "../config/db.js";
 
 export const MascotasModel = {
-  all() {
-    return new Promise((res, rej) => {
-      db.query("SELECT * FROM mascotas", (e, r) => e ? rej(e) : res(r));
-    });
+  async all() {
+    return await db.query("SELECT * FROM mascotas");
   },
 
-  create(data) {
+  async create(data) {
     const row = {
       id: data.id,
       nombre: data.nombre,
@@ -18,12 +16,11 @@ export const MascotasModel = {
       duenoId: data.duenoId || null,
       image: data.image ?? null
     };
-    return new Promise((res, rej) => {
-      db.query("INSERT INTO mascotas SET ?", row, (e) => e ? rej(e) : res(row));
-    });
+    await db.query("INSERT INTO mascotas SET ?", row);
+    return row;
   },
 
-  update(id, data) {
+  async update(id, data) {
     const row = {
       nombre: data.nombre,
       especie: data.especie,
@@ -33,14 +30,10 @@ export const MascotasModel = {
       duenoId: data.duenoId || null,
       image: data.image ?? null
     };
-    return new Promise((res, rej) => {
-      db.query("UPDATE mascotas SET ? WHERE id = ?", [row, id], (e, r) => e ? rej(e) : res(r));
-    });
+    return await db.query("UPDATE mascotas SET ? WHERE id = ?", [row, id]);
   },
 
-  remove(id) {
-    return new Promise((res, rej) => {
-      db.query("DELETE FROM mascotas WHERE id = ?", [id], (e, r) => e ? rej(e) : res(r));
-    });
+  async remove(id) {
+    return await db.query("DELETE FROM mascotas WHERE id = ?", [id]);
   }
 };

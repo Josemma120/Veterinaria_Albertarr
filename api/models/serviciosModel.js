@@ -1,21 +1,15 @@
 import { db } from "../config/db.js";
 
 export const ServiciosModel = {
-  all() {
-    return new Promise((res, rej) => {
-      db.query("SELECT * FROM servicios", (e, r) => {
-        if (e) return rej(e);
-        // Parse encargadosIds
-        const rows = r.map(row => ({
-          ...row,
-          encargadosIds: row.encargadosIds ? JSON.parse(row.encargadosIds) : []
-        }));
-        res(rows);
-      });
-    });
+  async all() {
+    const rows = await db.query("SELECT * FROM servicios");
+    return rows.map(row => ({
+      ...row,
+      encargadosIds: row.encargadosIds ? JSON.parse(row.encargadosIds) : []
+    }));
   },
 
-  create(data) {
+  async create(data) {
     const row = {
       id: data.id,
       nombre: data.nombre,
@@ -23,26 +17,21 @@ export const ServiciosModel = {
       precio: data.precio,
       encargadosIds: JSON.stringify(data.encargadosIds || [])
     };
-    return new Promise((res, rej) => {
-      db.query("INSERT INTO servicios SET ?", row, (e) => e ? rej(e) : res(row));
-    });
+    await db.query("INSERT INTO servicios SET ?", row);
+    return row;
   },
 
-  update(id, data) {
+  async update(id, data) {
     const row = {
       nombre: data.nombre,
       duracion: data.duracion ?? null,
       precio: data.precio,
       encargadosIds: JSON.stringify(data.encargadosIds || [])
     };
-    return new Promise((res, rej) => {
-      db.query("UPDATE servicios SET ? WHERE id = ?", [row, id], (e, r) => e ? rej(e) : res(r));
-    });
+    return await db.query("UPDATE servicios SET ? WHERE id = ?", [row, id]);
   },
 
-  remove(id) {
-    return new Promise((res, rej) => {
-      db.query("DELETE FROM servicios WHERE id = ?", [id], (e, r) => e ? rej(e) : res(r));
-    });
+  async remove(id) {
+    return await db.query("DELETE FROM servicios WHERE id = ?", [id]);
   }
 };

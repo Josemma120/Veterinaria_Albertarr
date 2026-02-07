@@ -1,26 +1,24 @@
 import { db } from "../config/db.js";
 
 export const CitasModel = {
-  all() {
-    return new Promise((res, rej) => {
-      const sql = `
-        SELECT 
-          c.*,
-          m.nombre as mascotaNombre,
-          cl.nombre as clienteNombre,
-          s.nombre as servicioNombre,
-          e.nombre as veterinarioNombre
-        FROM citas c
-        LEFT JOIN mascotas m ON c.mascotaId = m.id
-        LEFT JOIN clientes cl ON c.clienteId = cl.id
-        LEFT JOIN servicios s ON c.servicioId = s.id
-        LEFT JOIN empleados e ON c.veterinarioId = e.id
-      `;
-      db.query(sql, (e, r) => e ? rej(e) : res(r));
-    });
+  async all() {
+    const sql = `
+      SELECT 
+        c.*,
+        m.nombre as mascotaNombre,
+        cl.nombre as clienteNombre,
+        s.nombre as servicioNombre,
+        e.nombre as veterinarioNombre
+      FROM citas c
+      LEFT JOIN mascotas m ON c.mascotaId = m.id
+      LEFT JOIN clientes cl ON c.clienteId = cl.id
+      LEFT JOIN servicios s ON c.servicioId = s.id
+      LEFT JOIN empleados e ON c.veterinarioId = e.id
+    `;
+    return await db.query(sql);
   },
 
-  create(data) {
+  async create(data) {
     const row = {
       id: data.id,
       mascotaId: data.mascotaId,
@@ -34,20 +32,15 @@ export const CitasModel = {
       estado: data.estado ?? "activa",
       notas: data.notas ?? null
     };
-    return new Promise((res, rej) => {
-      db.query("INSERT INTO citas SET ?", row, (e) => e ? rej(e) : res(row));
-    });
+    await db.query("INSERT INTO citas SET ?", row);
+    return row;
   },
 
-  update(id, data) {
-    return new Promise((res, rej) => {
-      db.query("UPDATE citas SET ? WHERE id = ?", [data, id], (e, r) => e ? rej(e) : res(r));
-    });
+  async update(id, data) {
+    return await db.query("UPDATE citas SET ? WHERE id = ?", [data, id]);
   },
 
-  remove(id) {
-    return new Promise((res, rej) => {
-      db.query("DELETE FROM citas WHERE id = ?", [id], (e, r) => e ? rej(e) : res(r));
-    });
+  async remove(id) {
+    return await db.query("DELETE FROM citas WHERE id = ?", [id]);
   }
 };

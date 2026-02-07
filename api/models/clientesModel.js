@@ -1,13 +1,11 @@
 import { db } from "../config/db.js";
 
 export const ClientesModel = {
-  all() {
-    return new Promise((res, rej) => {
-      db.query("SELECT * FROM clientes", (e, r) => e ? rej(e) : res(r));
-    });
+  async all() {
+    return await db.query("SELECT * FROM clientes");
   },
 
-  create(data) {
+  async create(data) {
     const row = {
       id: data.id,
       nombre: data.nombre,
@@ -17,12 +15,11 @@ export const ClientesModel = {
       email: data.email,
       domicilio: data.domicilio
     };
-    return new Promise((res, rej) => {
-      db.query("INSERT INTO clientes SET ?", row, (e) => e ? rej(e) : res(row));
-    });
+    await db.query("INSERT INTO clientes SET ?", row);
+    return row;
   },
 
-  update(id, data) {
+  async update(id, data) {
     const row = {
       nombre: data.nombre,
       apP: data.apP,
@@ -31,14 +28,10 @@ export const ClientesModel = {
       email: data.email,
       domicilio: data.domicilio
     };
-    return new Promise((res, rej) => {
-      db.query("UPDATE clientes SET ? WHERE id = ?", [row, id], (e, r) => e ? rej(e) : res(r));
-    });
+    return await db.query("UPDATE clientes SET ? WHERE id = ?", [row, id]);
   },
 
-  remove(id) {
-    return new Promise((res, rej) => {
-      db.query("DELETE FROM clientes WHERE id = ?", [id], (e, r) => e ? rej(e) : res(r));
-    });
+  async remove(id) {
+    return await db.query("DELETE FROM clientes WHERE id = ?", [id]);
   }
 };
