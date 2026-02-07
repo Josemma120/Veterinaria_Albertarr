@@ -8,7 +8,8 @@ export const api = {
     });
 
     if (!res.ok) {
-      throw new Error("Credenciales incorrectas");
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || `Error: ${res.status}`);
     }
 
     return await res.json();   // { id, username, role }

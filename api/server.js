@@ -16,6 +16,13 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+// Middleware de logging para depuración en Render
+app.use((req, res, next) => {
+    console.log(`[REQUEST] ${req.method} ${req.path}`);
+    next();
+});
+
 // Servir archivos estáticos subidos
 const uploadsDir = path.join(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });

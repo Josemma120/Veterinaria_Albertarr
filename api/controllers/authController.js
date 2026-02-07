@@ -6,6 +6,7 @@ export const AuthController = {
     try {
       const user = await UsuariosModel.findByUsername(username);
       if (!user || user.password !== password) {
+        console.warn(`[LOGIN FAIL] Fallo de inicio de sesión para: ${username}`);
         return res.status(401).json({ error: "Credenciales inválidas" });
       }
       // aquí no usamos tokens para simplificar: devolvemos datos del usuario
