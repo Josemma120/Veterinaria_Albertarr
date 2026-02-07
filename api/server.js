@@ -59,6 +59,16 @@ app.get('/', (req, res) => {
 // o dejar que el static middleware maneje los archivos (.html, .js, .css)
 // Si no se encuentra, caerá en el 404 de abajo.
 
+// Health Check
+app.get('/ping', async (req, res) => {
+    try {
+        await db.query('SELECT 1');
+        res.send('pong (DB OK)');
+    } catch (e) {
+        res.status(500).send(`pong (DB ERROR: ${e.message})`);
+    }
+});
+
 // 404
 app.use((req, res) => res.status(404).json({ error: "No encontrado" }));
 

@@ -1,21 +1,18 @@
 import { db } from "../config/db.js";
 
 export const UsuariosModel = {
-  findByUsername(username) {
-    return new Promise((resolve, reject) => {
-      db.query(
+  async findByUsername(username) {
+    console.log(`[MODEL] Buscando usuario: ${username}`);
+    try {
+      const rows = await db.query(
         "SELECT * FROM usuarios WHERE nombre = ?",
-        [username],
-        (err, rows) => {
-          if (err) {
-            console.error("Error en query:", err);
-            reject(err);
-          } else {
-            console.log("Usuario buscado:", username, "Resultado:", rows[0]);
-            resolve(rows[0] || null);
-          }
-        }
+        [username]
       );
-    });
+      console.log(`[MODEL] Resultado búsqueda: ${rows ? rows.length : 0} encontrados`);
+      return rows && rows.length > 0 ? rows[0] : null;
+    } catch (err) {
+      console.error(`[MODEL ERROR] Error buscando usuario ${username}:`, err);
+      throw err;
+    }
   }
 };
