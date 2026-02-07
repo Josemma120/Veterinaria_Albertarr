@@ -8,11 +8,21 @@ const sslOptions = process.env.DB_SSL_CA_PATH
   ? { ca: fs.readFileSync(path.resolve(process.env.DB_SSL_CA_PATH)) }
   : (process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : undefined);
 
+console.log("--- DEBUG DB CONFIG ---");
+console.log("DB_HOST:", process.env.DB_HOST || "Usando default");
+console.log("DB_USER:", process.env.DB_USER || "Usando default");
+console.log("DB_PASS length:", process.env.DB_PASS ? process.env.DB_PASS.length : "0 (Vacío)");
+if (process.env.DB_PASS) {
+  console.log("DB_PASS (primeros 2 chars):", process.env.DB_PASS.substring(0, 2));
+  console.log("DB_PASS (últimos 2 chars):", process.env.DB_PASS.substring(process.env.DB_PASS.length - 2));
+}
+console.log("-----------------------");
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST || "mysql-c5b3d5e-gomezbj206-da13.g.aivencloud.com",
   port: parseInt(process.env.DB_PORT || "27854", 10),
   user: process.env.DB_USER || "avnadmin",
-  password: process.env.DB_PASS || "", 
+  password: process.env.DB_PASS || "",
   database: process.env.DB_NAME || "defaultdb",
   waitForConnections: true,
   connectionLimit: 10,
