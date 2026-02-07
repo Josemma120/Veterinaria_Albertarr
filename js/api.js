@@ -1,7 +1,7 @@
 // js/api.js
 export const api = {
   async login(username, password) {
-    const res = await fetch("http://localhost:3000/auth/login", {
+    const res = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password })
@@ -15,7 +15,7 @@ export const api = {
   },
 
   async list(entity) {
-    const res = await fetch(`http://localhost:3000/${entity}`);
+    const res = await fetch(`/${entity}`);
     if (!res.ok) throw new Error(`Error al listar ${entity}`);
     return await res.json();
   },
@@ -29,8 +29,8 @@ export const api = {
       body = JSON.stringify(data);
       headers["Content-Type"] = "application/json";
     }
-    
-    const res = await fetch(`http://localhost:3000/${entity}`, {
+
+    const res = await fetch(`/${entity}`, {
       method: "POST",
       headers,
       body
@@ -48,7 +48,7 @@ export const api = {
       headers["Content-Type"] = "application/json";
     }
 
-    const res = await fetch(`http://localhost:3000/${entity}/${id}`, {
+    const res = await fetch(`/${entity}/${id}`, {
       method: "PUT",
       headers,
       body
@@ -58,7 +58,7 @@ export const api = {
   },
 
   async remove(entity, id) {
-    const res = await fetch(`http://localhost:3000/${entity}/${id}`, {
+    const res = await fetch(`/${entity}/${id}`, {
       method: "DELETE"
     });
     if (!res.ok) throw new Error(`Error al eliminar ${entity}`);
